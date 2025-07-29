@@ -38,34 +38,24 @@ const data = {
   ],
 }
 
-interface Props {
-  className?: string
-  idName?: string
-  width?: string
-  height?: string
-  backgroundColor?: string
-}
 
 const {
   className = componentName,
   idName = componentName,
+  isdown = false,
   width = "100%",
   height = "auto",
   backgroundColor = "rgba(0,0,0,0)",
-} = Astro.props as Props
+  config = { svgHeight: 80, isdown: false }
 
+} = Astro.props
 const cx = "50%"
 const cy = "38%"
 const r = "50%"
+
 ---
 
-
-
-<div
-  class={className}
-  id={idName}
-  style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`}
->
+<div class={className} id={idName} style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`} >
   <div class="svgbox">
     <div class="subTitle">
       <h3>网站改版 ‘二婚’优惠！</h3>
@@ -188,6 +178,7 @@ const r = "50%"
     width: 100%;
     height: 100vh;
     background-color: var(--background-color);
+    background-color: rgb(3, 26, 18);
     z-index: 10;
   }
 
@@ -356,7 +347,7 @@ const r = "50%"
   }
 </style>
 
-<script type="module" define:vars={{ className, navTips: data.navTips }}>
+<script type="module" define:vars={{config, idName, className, navTips: data.navTips }}>
   class CurveHeader {
     constructor() {
       this.svgbox = document.querySelector('.svgbox')
@@ -391,7 +382,7 @@ const r = "50%"
       this.changeHue()
       this.navFlow()
       this.navsTip()
-      this.imageSlider()
+      // this.imageSlider()
       window.addEventListener('resize', () => this.updatePath())
       window.addEventListener('scroll', () => {
         this.scrollY = window.scrollY || document.documentElement.scrollTop
@@ -572,21 +563,63 @@ const r = "50%"
       const ww = window.innerWidth
       const wh = window.innerHeight
       const curveOffset = 25
-      const heightoffset = Math.max(150, ww / 10)
-      const limitY = Math.min((heightoffset - curveOffset) * 2, yScroll)
-      const viewBoxheight = wh * this.heightViewbox
-      const shapeHeight = viewBoxheight - heightoffset
-      const curveHeight = viewBoxheight - curveOffset - limitY
+      const middleOffset = Math.max(150, ww / 10)
+
+
+      const svgboxOffsetTop = this.svgbox.offsetTop;
+      const relativeScroll = Math.max(0, yScroll - svgboxOffsetTop);
+      let limitY = Math.min((middleOffset - curveOffset) * 2, relativeScroll);
+
+
+
+      let middleHeight = wh * (config.svgHeight/100)
+      let sideHeight = middleHeight - middleOffset
+      let curveHeight = middleHeight - curveOffset - limitY
+      
+      if (config.isdown) {
+        sideHeight = middleHeight
+        middleHeight = sideHeight - middleOffset
+        curveHeight = middleHeight + curveOffset + limitY
+      }
+
+
+
+
+      console.log("middleHeight", middleHeight);
+
+
+
+
+      // const svgboxOffsetTop = this.svgbox.offsetTop;
+      // const relativeScroll = Math.max(0, yScroll - svgboxOffsetTop);
+      // let limitY = Math.min((middleOffset - curveOffset) * 2, relativeScroll);
+
+      // let curveHeight;
+      // if (this.config.isdown) {
+      //   curveHeight = middleheight - curveOffset - limitY;
+      // } else {
+      //   curveHeight = middleheight + curveOffset + limitY;
+      // }
+
+
+
+
+
       const centerLeft = ww * 0.25
       const centerRight = ww - centerLeft
-      const curveData = `M 0,${shapeHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${shapeHeight}`
+      const curveData = `M 0,${sideHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${sideHeight}`
       this.curveData = curveData
       const headData = curveData + ` V 0 H 0 Z`
-      const viewBoxShadow = viewBoxheight + 100     
 
-      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxShadow}`)
+      const viewBoxHeight = sideHeight + middleOffset + 100
+      // const viewBoxHeight = Math.max(sideHeight, curveHeight) + 100
+      this.svgbox.style.height = `${viewBoxHeight}px`
+      console.log("viewBoxHeight: ", viewBoxHeight);
+      
+
+      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`)
       this.headerbgPath.setAttribute("d", headData)
-      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxShadow}`)
+      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`)
       this.headerPath.setAttribute("d", headData)
       this.curvePath.setAttribute("d", curveData)
       this.curveLength = this.curvePath.getTotalLength()
@@ -594,21 +627,20 @@ const r = "50%"
       const baseOffset = 10
       let shapTopOffset = curveHeight - curveOffset
       let shapBottomOffset = curveHeight + curveOffset
-      let baseTopHeight = shapeHeight - baseOffset / 2
-      let baseBottomHeight = shapeHeight + baseOffset / 2
+      let baseTopHeight = sideHeight - baseOffset / 2
+      let baseBottomHeight = sideHeight + baseOffset / 2
       const shapTop = `M 0,${baseTopHeight} Q ${centerLeft},${shapTopOffset} ${ww / 2},${shapTopOffset} Q ${centerRight},${shapTopOffset} ${ww},${baseTopHeight} v ${baseOffset}`
       const shapBottom = ` Q ${centerRight},${shapBottomOffset} ${ww / 2},${shapBottomOffset} Q ${centerLeft},${shapBottomOffset} 0,${baseBottomHeight} Z`
       const curveOffsetData = shapTop + " " + shapBottom
       this.headerShape.setAttribute("d", curveOffsetData)
 
-      const svgboxHeight = Math.max(curveHeight, shapeHeight) + 100
-      this.svgbox.style.height = `${svgboxHeight}px`
+
       
       this.girlCenter(ww, curveHeight)
       this.setNavsOnPath()
      
-      if(Math.abs(curveHeight-shapeHeight) > 50){
-        this.subTitle.style.top = `${shapeHeight-50}px`
+      if(Math.abs(curveHeight-sideHeight) > 50){
+        this.subTitle.style.top = `${sideHeight-50}px`
         this.subTitle.style.opacity = 1
       }else{
         this.subTitle.style.opacity = 0

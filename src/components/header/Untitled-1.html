@@ -1,9 +1,23 @@
 ---
+import App from '../layouts/App.astro';
+import Header from '../components/header/Header-CurveHeader.astro';
+import HeaderTitle from "../components/header/Header-CurveHeader-HeaderTitle.astro"
+import FluidGridGallery from '../components/project/Grid-FluidGridGallery.astro';
+---
+<App>
+	<Header idName="curveHeaderUp" className="curveHeaderUp" isdown={true}>
+		<HeaderTitle slot="headerTitle" />
+	</Header>
+	<Header idName="curveHeaderDown" className="curveHeaderDown" isdown={false} />
+	<FluidGridGallery />
+</App>
+我的Headr 组件要调用两次
+为了避免冲突
+请修改一下代码components/header/Header-CurveHeader.astro
+---
 import { Icon } from 'astro-icon/components'
-
 const componentName = "CurveHeader"
 const componentDescription = "A dynamic header component with curved SVG path and navigation menu"
-
 const data = {
   headerImages: [
     "https://cn.bing.com/th?id=OHR.KenaiSpires_EN-US3294247007_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
@@ -37,35 +51,19 @@ const data = {
     "青花服务真靠谱  网站赚钱快一步",
   ],
 }
-
-interface Props {
-  className?: string
-  idName?: string
-  width?: string
-  height?: string
-  backgroundColor?: string
-}
-
 const {
   className = componentName,
   idName = componentName,
+  isdown = false,
   width = "100%",
   height = "auto",
   backgroundColor = "rgba(0,0,0,0)",
-} = Astro.props as Props
-
+} = Astro.props
 const cx = "50%"
 const cy = "38%"
 const r = "50%"
 ---
-
-
-
-<div
-  class={className}
-  id={idName}
-  style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`}
->
+<div class={className} id={idName} style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`} >
   <div class="svgbox">
     <div class="subTitle">
       <h3>网站改版 ‘二婚’优惠！</h3>
@@ -73,10 +71,10 @@ const r = "50%"
     <div class="headerbg">
       <svg class="headerbgSvg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <clipPath id="headerbgClip">
-            <path id="headerbgPath" d="" />
+          <clipPath id=`${idName}-headerbgClip`>
+            <path id=`${idName}-headerbgPath` d="" />
           </clipPath>
-          <radialGradient id="headerbgGradient" cx={cx} cy={cy} r={r} gradientUnits="userSpaceOnUse">
+          <radialGradient id=`${idName}-headerbgGradient` cx={cx} cy={cy} r={r} gradientUnits="userSpaceOnUse">
             <stop offset="0%" stop-color="#ffffff" />
             <stop offset="5%" stop-color="#f0f0f0" />
             <stop offset="5.01%" stop-color="#eaeaea" />
@@ -118,11 +116,11 @@ const r = "50%"
     <div class="headerfg">
       <svg class="headerfgSvg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <clipPath id="headerClip">
-            <path id="headerPath" d="" />
+          <clipPath id=`${idName}-headerClip`>
+            <path id=`${idName}-headerPath` d="" />
           </clipPath>
-          <path id="headerShape" d="" />
-          <path id="curvePath" d="" />
+          <path id=`${idName}-headerShape` d="" />
+          <path id=`${idName}-curvePath` d="" />
         </defs>
         <use class="headderfgUse" href="#headerPath" />
         <g class="girl" clip-path="url(#headerClip)">
@@ -156,9 +154,8 @@ const r = "50%"
       ))}
     </div>
   </div>
-  <div class="worker"></div>
+  <!-- <div class="worker"></div> -->
 </div>
-
 <style scoped>
   :root {
     --hue: 0;
@@ -171,7 +168,6 @@ const r = "50%"
     --header-stroke: 5px;
     --nav-color: rgba(255, 255, 255, 0.7);
   }
-
   .worker {
     position: relative;
     width: 80%;
@@ -182,7 +178,6 @@ const r = "50%"
     background-color: rgba(33, 14, 117, 0.89);
     z-index: 0;
   }
-
   .svgbox {
     position: relative;
     width: 100%;
@@ -191,7 +186,6 @@ const r = "50%"
     background-color: rebeccapurple;
     z-index: 10;
   }
-
   .svgbox .headerbg {
     position: relative;
     top: 0;
@@ -199,7 +193,6 @@ const r = "50%"
     width: 100%;
     height: 100%;
   }
-
   .svgbox .subTitle {
     position: absolute;
     top: 0;
@@ -215,7 +208,6 @@ const r = "50%"
     background-color: var(--background-color);
     opacity: 0;
   }
-
   .svgbox .subTitle h3 {
     position: relative;
     font-family: sans-serif;
@@ -230,7 +222,6 @@ const r = "50%"
     -webkit-background-clip: text;
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
   }
-
   @keyframes text-scan {
     0% {
       background-position: -500%;
@@ -239,16 +230,13 @@ const r = "50%"
       background-position: 500%;
     }
   }
-
   .svgbox .headerbg .useHeaderbgPathColor {
     fill: black;
     opacity: 0.7;
   }
-
   .svgbox .headerbg .headerBackgroundImg {
     transform: scale(1.5);
   }
-
   .svgbox .headerfg {
     position: absolute;
     top: 0;
@@ -256,29 +244,24 @@ const r = "50%"
     width: 100%;
     height: 100%;
   }
-
   .svgbox .headerfg .headderfgUse {
     fill: rgba(0, 0, 0, 0.1);
   }
-
   .svgbox .headerfg .headerShape {
     fill: var(--menu-bg);
     filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
   }
-
   .svgbox .headerfg .curvePath {
     fill: none;
     stroke: var(--menu-bg);
     stroke-width: calc(var(--header-stroke) * 1);
     stroke-linecap: round;
   }
-
   .svgbox .headerfg .textTip {
     fill: var(--nav-color);
     font-size: 1.5em;
     transition: opacity 0.3s ease;
   }
-
   .svgbox .titleInfo {
     position: absolute;
     width: 100%;
@@ -286,7 +269,6 @@ const r = "50%"
     top: 0;
     margin: 0 auto;
   }
-
   .svgbox .menu {
     position: absolute;
     width: 100px;
@@ -296,7 +278,6 @@ const r = "50%"
     opacity: 0;
     transition: opacity 0.5s ease;
   }
-
   .svgbox .menu .nav {
     position: absolute;
     width: 100px;
@@ -317,15 +298,12 @@ const r = "50%"
     transition: scale 0.5s ease;
     cursor: pointer;
   }
-
   .svgbox .menu .nav.logo {
     background-color: var(--menu-bg-darker);
   }
-
   .jelly-animate {
     animation: jelly 0.5s ease-in-out;
   }
-
   @keyframes jelly {
     0% {
       transform: scale(1);
@@ -343,32 +321,30 @@ const r = "50%"
       transform: scale(1);
     }
   }
-
   .svgbox .menu .nav:hover {
     color: rgba(255, 255, 255, 0.8);
     background: radial-gradient(var(--menu-bg-lighter), var(--menu-bg-verydark));
-
   }
-
   .svgbox .menu .nav.logo img {
     width: 80%;
     height: 80%;
     object-fit: contain;
   }
 </style>
-
-<script type="module" define:vars={{ className, navTips: data.navTips }}>
+<script type="module" define:vars={{idName, className, isdown, navTips: data.navTips }}>
   class CurveHeader {
-    constructor() {
+    constructor(idName, isdown) {
       this.svgbox = document.querySelector('.svgbox')
       this.subTitle = document.querySelector('.svgbox .subTitle')
       this.headerbg = document.querySelector('.headerbgSvg')
-      this.headerbgPath = document.querySelector('.headerbg #headerbgPath')
+      this.headerbgPath = document.querySelector(`#${idName}-headerbgPath`)
       this.useHeaderbgGradient = document.querySelector('.headerbg .useHeaderbgGradient')
       this.headerfg = document.querySelector('.headerfgSvg')
-      this.headerPath = document.querySelector('.headerfg #headerPath')
-      this.headerShape = document.querySelector('.headerfg #headerShape')
-      this.curvePath = document.querySelector('.headerfg #curvePath')
+      this.headerPath = document.querySelector(`#${idName}-headerPath`)
+      this.headerShape = document.querySelector(`#${idName}-headerShape`)
+      this.curvePath = document.querySelector(`#${idName}-curvePath`)
+      this.defaultTip = document.querySelector('.headerfg .defaultTip')
+      this.navTip = document.querySelector('.headerfg .navTip')
       this.menu = document.querySelector('.svgbox .menu')
       this.navs = document.querySelectorAll('.svgbox .menu .nav')
       this.navLogo = document.querySelector('.nav.logo')
@@ -376,9 +352,6 @@ const r = "50%"
       this.headerBackgroundImg = document.querySelectorAll('.svgbox .headerBackgroundImg')
       this.girlImg = document.querySelector('.girlImg')
       this.textTip = document.querySelectorAll('.svgbox .textTip')
-
-      this.heightViewbox = 0.7
-      this.isup = false
       this.curveLength = 0
       this.curveData = ""
       this.currentImageIndex = 0
@@ -387,8 +360,10 @@ const r = "50%"
       this.scrollY = 0
       this.init()
     }
-
     init() {
+      console.log("className: ", className);
+      console.log("isdown: ", isdown);
+      
       this.updatePath()
       this.changeHue()
       this.navFlow()
@@ -400,11 +375,9 @@ const r = "50%"
         this.updatePath(this.scrollY)
       })
     }
-
     remap(value, inMin, inMax, outMin, outMax) {
       return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin)
     }
-
     changeHue() {
       let hue = 0
       const root = document.documentElement
@@ -413,7 +386,6 @@ const r = "50%"
         root.style.setProperty('--hue', hue)
       }, 5000)
     }
-
     imageSlider() {
       const images = Array.from(this.headerBackgroundImg)
       let loadedCount = 0
@@ -432,7 +404,6 @@ const r = "50%"
         }
       })
     }
-
     changeBackgroundImg() {
       this.headerBackgroundImg.forEach((img, index) => {
         img.style.opacity = '0'
@@ -444,7 +415,6 @@ const r = "50%"
       this.currentImageIndex = (this.currentImageIndex + 1) % this.headerBackgroundImg.length
       setTimeout(() => this.changeBackgroundImg(), 5000)
     }
-
     girlCenter(width, curveHeight) {
       const imgWidth = 378
       const imgHeight = 378
@@ -454,7 +424,6 @@ const r = "50%"
       const ty = curveHeight - imgHeight
       girlImg.style.transform = `translate(${tx}px, ${ty}px)`
     }
-
     navFlow() {
       this.menu.style.opacity = 1
       let flowEnd = false
@@ -476,7 +445,6 @@ const r = "50%"
       }
       requestAnimationFrame(animate)
     }
-
     logoNavExpand() {
       let animating = false
       let animated = false
@@ -504,7 +472,6 @@ const r = "50%"
         requestAnimationFrame(animate)
       })
     }
-
     setNavsOnPath(navSpace = 0) {
       let gap = navSpace / 1000
       const maxScale = 1;
@@ -515,7 +482,6 @@ const r = "50%"
       const centerIndex = Math.floor(navCount / 2);
       let widths = navs.map(nav => nav.getBoundingClientRect().width);
       const navWidthPercents = widths.map(width => width / this.curveLength * minWidth);
-
       let totalOffset = 0;
       for (let i = 0; i < navCount; i++) {
         if (i < centerIndex) {
@@ -524,28 +490,23 @@ const r = "50%"
           totalOffset += navWidthPercents[i] / 2;
         }
       }
-
       let currentOffset = 0.5 - totalOffset;
-
       navs.forEach((nav, i) => {
         const distanceFromCenter = Math.abs(i - centerIndex);
         const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale);
         const navWidthPercent = navWidthPercents[i];
         const navCenterPercent = (currentOffset + navWidthPercent / 2) * 100;
-
         nav.style.offsetPath = `path("${this.curveData}")`;
         nav.style.offsetDistance = `${navCenterPercent}%`;
         nav.style.zIndex = `${100 - distanceFromCenter}`;
         nav.style.transform = `scale(${scaleFactor})`;
-
         currentOffset += navWidthPercent + gap;
       });
     }
-
     navsTip() {
       this.menu.style.display = "block"
-      const defaultTip = document.querySelector(`.${className} .defaultTip`)
-      const navTip = document.querySelector(`.${className} .navTip`)
+      const defaultTip = this.defaultTip
+      const navTip = this.navTip
       defaultTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s"
       navTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s"
       this.menu.addEventListener("mouseover", event => {
@@ -569,62 +530,63 @@ const r = "50%"
         navTip.style.opacity = '0'
       })
     }
-
-    updatePath(yScroll = 0, isup = false) {
+    updatePath(yScroll = 0, isdown = 0) {
       const ww = window.innerWidth
       const wh = window.innerHeight
       const curveOffset = 25
       const heightoffset = Math.max(150, ww / 10)
+      const middleheight = wh * 0.7
       
-      yScroll = isup ? yScroll : -yScroll
-      const limitY = Math.min((heightoffset - curveOffset) * 2, yScroll)
-      const viewBoxheight = wh * this.heightViewbox
       
-      const shapeHeight = isup ? viewBoxheight - heightoffset : viewBoxheight + heightoffset;
-
-      const curveHeight = viewBoxheight - curveOffset - limitY
+      let limitY = Math.min((heightoffset - curveOffset) * 2, yScroll)
+      let sideHeight = middleheight - heightoffset
+      let curveHeight = middleheight - curveOffset - limitY
+      
+      if (!isdown) {
+        sideHeight = middleheight + heightoffset
+        curveHeight = middleheight + limitY
+      }
       const centerLeft = ww * 0.25
       const centerRight = ww - centerLeft
-      const curveData = `M 0,${shapeHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${shapeHeight}`
-      this.curveData = curveData
-      const headData = curveData + ` V 0 H 0 Z`
-
-      const viewBoxHeight = Math.max(curveHeight, shapeHeight) + 100
-
-      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`)
+      const curveData = `M 0,${sideHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${sideHeight}`
+      const headData = curveData + ` V 0 H 0 Z`      
+   
+      const viewboxHeight = Math.max(curveHeight, sideHeight) + 50      
+      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewboxHeight}`)
       this.headerbgPath.setAttribute("d", headData)
-      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`)
+      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewboxHeight}`)
       this.headerPath.setAttribute("d", headData)
       this.curvePath.setAttribute("d", curveData)
-      this.curveLength = this.curvePath.getTotalLength()
-
+      
       const baseOffset = 10
       let shapTopOffset = curveHeight - curveOffset
       let shapBottomOffset = curveHeight + curveOffset
-      let baseTopHeight = shapeHeight - baseOffset / 2
-      let baseBottomHeight = shapeHeight + baseOffset / 2
+      let baseTopHeight = sideHeight - baseOffset / 2
+      let baseBottomHeight = sideHeight + baseOffset / 2
       const shapTop = `M 0,${baseTopHeight} Q ${centerLeft},${shapTopOffset} ${ww / 2},${shapTopOffset} Q ${centerRight},${shapTopOffset} ${ww},${baseTopHeight} v ${baseOffset}`
       const shapBottom = ` Q ${centerRight},${shapBottomOffset} ${ww / 2},${shapBottomOffset} Q ${centerLeft},${shapBottomOffset} 0,${baseBottomHeight} Z`
       const curveOffsetData = shapTop + " " + shapBottom
       this.headerShape.setAttribute("d", curveOffsetData)
-
+      this.svgbox.style.height = `${viewboxHeight}px`
+      this.curveData = curveData
+      this.curveLength = this.curvePath.getTotalLength()
       
-      this.svgbox.style.height = `${viewBoxHeight}px`
       
       this.girlCenter(ww, curveHeight)
       this.setNavsOnPath()
      
-      if(Math.abs(curveHeight-shapeHeight) > 50){
-        this.subTitle.style.top = `${shapeHeight-50}px`
+      if(Math.abs(curveHeight-sideHeight) > 50){
+        this.subTitle.style.top = `${sideHeight-50}px`
         this.subTitle.style.opacity = 1
       }else{
         this.subTitle.style.opacity = 0
       }
-
     }
   }
-
   document.addEventListener('DOMContentLoaded', () => {
-    const curveHeader = new CurveHeader()
-  })
+    // 用一个普通变量名
+    const curveHeaderInstance = new CurveHeader(idName);
+    // 或者挂载到 window 上，区分不同实例
+    window[`${idName}CurveHeader`] = curveHeaderInstance;
+  });
 </script>
