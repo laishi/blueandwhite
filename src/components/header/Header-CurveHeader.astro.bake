@@ -11,18 +11,18 @@ const data = {
     "https://cn.bing.com/th?id=OHR.DelicateArch_EN-US2369284902_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
     "https://cn.bing.com/th?id=OHR.IcelandSolstice_EN-US2057542769_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
   ],
-  girlimg: "/assets/imgs/girl.png",
+  girlimg: "/blueandwhite/assets/imgs/girl.png",
   navItems: ["特色", "服务", "项目", "logo", "团队", "博客", "联系"],
   navMenu: [
     { label: "特色", icon: "mdi:star" },
     { label: "服务", icon: "mdi:tools" },
     { label: "项目", icon: "mdi:briefcase" },
-    { label: "logo", image: "/assets/logo/qinghua-logo.svg" },
+    { label: "logo", image: "/blueandwhite/assets/logo/qinghua-logo.svg" },
     { label: "团队", icon: "mdi:account-group" },
     { label: "博客", icon: "mdi:note-text" },
     { label: "联系", icon: "mdi:email" },
   ],
-  logoSrc: "/assets/logo/qinghua-logo.svg",
+  logoSrc: "/blueandwhite/assets/logo/qinghua-logo.svg",
   defaultTip: "青花卓越 13640566324 laishi886@hotmail.com",
   navTips: [
     "青花卓越筑梦想  网站低价又闪亮",
@@ -58,6 +58,8 @@ const cx = "50%"
 const cy = "38%"
 const r = "50%"
 ---
+
+
 
 <div
   class={className}
@@ -165,6 +167,7 @@ const r = "50%"
     --menu-bg: hsl(var(--hue), var(--saturation), var(--lightness));
     --menu-bg-lighter: hsl(var(--hue), var(--saturation), 50%);
     --menu-bg-darker: hsl(var(--hue), var(--saturation), 20%);
+    --menu-bg-verydark: hsl(var(--hue), var(--saturation), 10%);
     --header-stroke: 5px;
     --nav-color: rgba(255, 255, 255, 0.7);
   }
@@ -342,7 +345,8 @@ const r = "50%"
 
   .svgbox .menu .nav:hover {
     color: rgba(255, 255, 255, 0.8);
-    background-color: var(--menu-bg-lighter);
+    background: radial-gradient(var(--menu-bg-lighter), var(--menu-bg-verydark));
+
   }
 
   .svgbox .menu .nav.logo img {
@@ -387,7 +391,7 @@ const r = "50%"
       this.changeHue()
       this.navFlow()
       this.navsTip()
-      // this.imageSlider()
+      this.imageSlider()
       window.addEventListener('resize', () => this.updatePath())
       window.addEventListener('scroll', () => {
         this.scrollY = window.scrollY || document.documentElement.scrollTop
@@ -486,8 +490,8 @@ const r = "50%"
         animating = true
         let space = 0
         const animate = () => {
-          if (space < 60) {
-            space += 10
+          if (space < 50) {
+            space += 5
             this.setNavsOnPath(space)
             requestAnimationFrame(animate)
           } else {
@@ -498,8 +502,6 @@ const r = "50%"
         requestAnimationFrame(animate)
       })
     }
-
-
 
     setNavsOnPath(navSpace = 0) {
       let gap = navSpace / 1000
@@ -536,43 +538,6 @@ const r = "50%"
 
         currentOffset += navWidthPercent + gap;
       });
-    }
-
-
-    __setNavsOnPath(spacing = 0) {
-      const maxScale = 1
-      const minScale = 0.8
-      const minWidth = Math.min((this.scrollY / 100) * 1, 1.1)
-      const navs = Array.from(this.navs)
-      const navCount = navs.length
-      const centerIndex = Math.floor(navCount / 2)
-      let widths = navs.map(nav => nav.getBoundingClientRect().width)
-      let totalWidth = 0
-
-      for (let i = 0; i < navs.length; i++) {
-        const distanceFromCenter = Math.abs(i - centerIndex)
-        const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale)
-        const width = widths[i] * scaleFactor * minWidth
-        widths[i] = width
-        totalWidth += width
-        navs[i].style.transform = `scale(${scaleFactor})`
-      } 
-      
-      totalWidth += spacing * (navCount - 1)
-      const startOffset = (this.curveLength - totalWidth) / 2
-      let currentOffset = startOffset
-
-      navs.forEach((nav, i) => {
-        const distanceFromCenter = Math.abs(i - centerIndex)
-        const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale)
-        const navWidth = widths[i]
-        const navCenter = currentOffset + navWidth / 2
-        nav.style.offsetPath = `path("${this.curveData}")`
-        nav.style.offsetDistance = `${navCenter}px`
-        nav.style.transform = `scale(${scaleFactor})`
-        nav.style.zIndex = `${100 - distanceFromCenter}`
-        currentOffset += navWidth + spacing
-      })
     }
 
     navsTip() {

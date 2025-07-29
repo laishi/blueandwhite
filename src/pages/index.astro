@@ -4,13 +4,16 @@ import Header from '../components/header/Header-CurveHeader.astro';
 import HeaderTitle from "../components/header/Header-CurveHeader-HeaderTitle.astro"
 import FluidGridGallery from '../components/project/Grid-FluidGridGallery.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <App>
-	<Header>
+
+	<Header idName="curveHeaderUp" className="curveHeaderUp" config={{ svgHeight: 80, isdown: true }} >
 		<HeaderTitle slot="headerTitle" />
-	<Header />
+	</Header>
+
+	<Header idName="curveHeaderDown" className="curveHeaderDown" config={{ svgHeight: 50, isdown: false }} />
+
 	<FluidGridGallery />
+
 </App>

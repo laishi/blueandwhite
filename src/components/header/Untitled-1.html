@@ -1,9 +1,8 @@
 ---
-// Header-CurveHeader.astro
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 
-const componentName = "CurveHeader";
-const componentDescription = "A dynamic header component with curved SVG path and navigation menu";
+const componentName = "CurveHeader"
+const componentDescription = "A dynamic header component with curved SVG path and navigation menu"
 
 const data = {
   headerImages: [
@@ -37,26 +36,36 @@ const data = {
     "展示营销双管下  商机把握赢天下",
     "青花服务真靠谱  网站赚钱快一步",
   ],
-};
+}
+
+interface Props {
+  className?: string
+  idName?: string
+  width?: string
+  height?: string
+  backgroundColor?: string
+}
 
 const {
   className = componentName,
   idName = componentName,
-  isdown = false,
   width = "100%",
   height = "auto",
   backgroundColor = "rgba(0,0,0,0)",
-  config = { svgHeight: 10, isdown: false }
-} = Astro.props;
+} = Astro.props as Props
 
-const cx = "50%";
-const cy = "38%";
-const r = "50%";
-
-
+const cx = "50%"
+const cy = "38%"
+const r = "50%"
 ---
 
-<div class={className} id={idName} style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`}>
+
+
+<div
+  class={className}
+  id={idName}
+  style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`}
+>
   <div class="svgbox">
     <div class="subTitle">
       <h3>网站改版 ‘二婚’优惠！</h3>
@@ -64,10 +73,10 @@ const r = "50%";
     <div class="headerbg">
       <svg class="headerbgSvg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <clipPath id={`${idName}-headerbgClip`}>
-            <path id={`${idName}-headerbgPath`} d="" />
+          <clipPath id="headerbgClip">
+            <path id="headerbgPath" d="" />
           </clipPath>
-          <radialGradient id={`${idName}-headerbgGradient`} cx={cx} cy={cy} r={r} gradientUnits="userSpaceOnUse">
+          <radialGradient id="headerbgGradient" cx={cx} cy={cy} r={r} gradientUnits="userSpaceOnUse">
             <stop offset="0%" stop-color="#ffffff" />
             <stop offset="5%" stop-color="#f0f0f0" />
             <stop offset="5.01%" stop-color="#eaeaea" />
@@ -88,7 +97,7 @@ const r = "50%";
             <stop offset="100%" stop-color="#000000" />
           </radialGradient>
         </defs>
-        <g class="headerImages" clip-path={`url(#${idName}-headerbgClip)`}>
+        <g class="headerImages" clip-path="url(#headerbgClip)">
           {data.headerImages.map(src => (
             <image
               class="headerBackgroundImg"
@@ -99,8 +108,8 @@ const r = "50%";
             />
           ))}
         </g>
-        <use class="useHeaderbgPathColor" href={`#${idName}-headerbgPath`} />
-        <use class="useHeaderbgGradient" href={`#${idName}-headerbgPath`} fill={`url(#${idName}-headerbgGradient)`} />
+        <use class="useHeaderbgPathColor" href="#headerbgPath" />
+        <use class="useHeaderbgGradient" href="#headerbgPath" fill="url(#headerbgGradient)" />
       </svg>
     </div>
     <div class="titleInfo">
@@ -109,26 +118,26 @@ const r = "50%";
     <div class="headerfg">
       <svg class="headerfgSvg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <clipPath id={`${idName}-headerClip`}>
-            <path id={`${idName}-headerPath`} d="" />
+          <clipPath id="headerClip">
+            <path id="headerPath" d="" />
           </clipPath>
-          <path id={`${idName}-headerShape`} d="" />
-          <path id={`${idName}-curvePath`} d="" />
+          <path id="headerShape" d="" />
+          <path id="curvePath" d="" />
         </defs>
-        <use class="headderfgUse" href={`#${idName}-headerPath`} />
-        <g class="girl" clip-path={`url(#${idName}-headerClip)`}>
+        <use class="headderfgUse" href="#headerPath" />
+        <g class="girl" clip-path="url(#headerClip)">
           <image class="girlImg" href={data.girlimg} />
         </g>
-        <use class="headerShape" href={`#${idName}-headerShape`} />
-        <use class="curvePath" href={`#${idName}-curvePath`} />
+        <use class="headerShape" href="#headerShape" />
+        <use class="curvePath" href="#curvePath" />
         <g>
           <text class="textTip" dy="-100">
-            <textPath class="defaultTip" href={`#${idName}-curvePath`} startOffset="50%" text-anchor="middle">
+            <textPath class="defaultTip" href="#curvePath" startOffset="50%" text-anchor="middle">
               {data.defaultTip}
             </textPath>
           </text>
           <text class="textTip" dy="-100">
-            <textPath class="navTip" href={`#${idName}-curvePath`} startOffset="50%" text-anchor="middle"></textPath>
+            <textPath class="navTip" href="#curvePath" startOffset="50%" text-anchor="middle"></textPath>
           </text>
         </g>
       </svg>
@@ -147,7 +156,7 @@ const r = "50%";
       ))}
     </div>
   </div>
-  <!-- <div class="worker"></div> -->
+  <div class="worker"></div>
 </div>
 
 <style scoped>
@@ -173,6 +182,7 @@ const r = "50%";
     background-color: rgba(33, 14, 117, 0.89);
     z-index: 0;
   }
+
   .svgbox {
     position: relative;
     width: 100%;
@@ -299,6 +309,7 @@ const r = "50%";
     align-items: center;
     border-radius: 100%;
     border: var(--header-stroke) solid var(--menu-bg);
+    /* border: var(--header-stroke) solid white; */
     background-color: var(--menu-bg-darker);
     color: rgba(255, 255, 255, 0.719);
     font-size: 1.5em;
@@ -336,6 +347,7 @@ const r = "50%";
   .svgbox .menu .nav:hover {
     color: rgba(255, 255, 255, 0.8);
     background: radial-gradient(var(--menu-bg-lighter), var(--menu-bg-verydark));
+
   }
 
   .svgbox .menu .nav.logo img {
@@ -345,155 +357,156 @@ const r = "50%";
   }
 </style>
 
-<script type="module" define:vars={{ idName, className, isdown, navTips: data.navTips, config: config }}>
+<script type="module" define:vars={{ className, navTips: data.navTips }}>
   class CurveHeader {
-    constructor(idName, isdown, config) {
-      this.idName = idName;
-      this.svgbox = document.querySelector(`#${idName} .svgbox`);
+    constructor() {
+      this.svgbox = document.querySelector('.svgbox')
+      this.subTitle = document.querySelector('.svgbox .subTitle')
+      this.headerbg = document.querySelector('.headerbgSvg')
+      this.headerbgPath = document.querySelector('.headerbg #headerbgPath')
+      this.useHeaderbgGradient = document.querySelector('.headerbg .useHeaderbgGradient')
+      this.headerfg = document.querySelector('.headerfgSvg')
+      this.headerPath = document.querySelector('.headerfg #headerPath')
+      this.headerShape = document.querySelector('.headerfg #headerShape')
+      this.curvePath = document.querySelector('.headerfg #curvePath')
+      this.menu = document.querySelector('.svgbox .menu')
+      this.navs = document.querySelectorAll('.svgbox .menu .nav')
+      this.navLogo = document.querySelector('.nav.logo')
+      this.headerImages = document.querySelector('.svgbox .headerImages')
+      this.headerBackgroundImg = document.querySelectorAll('.svgbox .headerBackgroundImg')
+      this.girlImg = document.querySelector('.girlImg')
+      this.textTip = document.querySelectorAll('.svgbox .textTip')
 
-      this.subTitle = document.querySelector(`#${idName} .svgbox .subTitle`);
-      this.headerbg = document.querySelector(`#${idName} .headerbgSvg`);
-      this.headerbgPath = document.querySelector(`#${idName}-headerbgPath`);
-      this.useHeaderbgGradient = document.querySelector(`#${idName} .headerbg .useHeaderbgGradient`);
-      this.headerfg = document.querySelector(`#${idName} .headerfgSvg`);
-      this.headerPath = document.querySelector(`#${idName}-headerPath`);
-      this.headerShape = document.querySelector(`#${idName}-headerShape`);
-      this.curvePath = document.querySelector(`#${idName}-curvePath`);
-      this.defaultTip = document.querySelector(`#${idName} .headerfg .defaultTip`);
-      this.navTip = document.querySelector(`#${idName} .headerfg .navTip`);
-      this.menu = document.querySelector(`#${idName} .svgbox .menu`);
-      this.navs = document.querySelectorAll(`#${idName} .svgbox .menu .nav`);
-      this.navLogo = document.querySelector(`#${idName} .nav.logo`);
-      this.headerImages = document.querySelector(`#${idName} .svgbox .headerImages`);
-      this.headerBackgroundImg = document.querySelectorAll(`#${idName} .svgbox .headerBackgroundImg`);
-      this.girlImg = document.querySelector(`#${idName} .girlImg`);
-      this.textTip = document.querySelectorAll(`#${idName} .svgbox .textTip`);
-      this.curveLength = 0;
-      this.curveData = "";
-      this.currentImageIndex = 0;
-      this.viewBoxHeight = 0;
-      this.pathHeight = 0;
-      this.scrollY = 0;
-      this.init();
+      this.heightViewbox = 0.7
+      this.isup = false
+      this.curveLength = 0
+      this.curveData = ""
+      this.currentImageIndex = 0
+      this.viewBoxHeight = 0
+      this.pathHeight = 0
+      this.scrollY = 0
+      this.init()
     }
 
     init() {
-      this.updatePath();
-      this.changeHue();
-      this.navFlow();
-      this.navsTip();
-      this.imageSlider();
-      window.addEventListener('resize', () => this.updatePath());
+      this.updatePath()
+      this.changeHue()
+      this.navFlow()
+      this.navsTip()
+      this.imageSlider()
+      window.addEventListener('resize', () => this.updatePath())
       window.addEventListener('scroll', () => {
-        this.scrollY = window.scrollY || document.documentElement.scrollTop;
-        this.updatePath(this.scrollY);
-      });
+        this.scrollY = window.scrollY || document.documentElement.scrollTop
+        this.updatePath(this.scrollY)
+      })
     }
 
     remap(value, inMin, inMax, outMin, outMax) {
-      return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
+      return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin)
     }
 
     changeHue() {
-      let hue = 0;
-      const root = document.documentElement;
+      let hue = 0
+      const root = document.documentElement
       setInterval(() => {
-        hue = (hue + 30) % 360;
-        root.style.setProperty('--hue', hue);
-      }, 5000);
+        hue = (hue + 30) % 360
+        root.style.setProperty('--hue', hue)
+      }, 5000)
     }
 
     imageSlider() {
-      const images = Array.from(this.headerBackgroundImg);
-      let loadedCount = 0;
-      const totalImages = images.length;
+      const images = Array.from(this.headerBackgroundImg)
+      let loadedCount = 0
+      const totalImages = images.length
       images.forEach(image => {
-        const imgUrl = image.getAttribute('href');
-        const img = new Image();
-        img.src = imgUrl;
+        const imgUrl = image.getAttribute('href')
+        const img = new Image()
+        img.src = imgUrl
         img.onload = () => {
-          loadedCount++;
+          loadedCount++
           if (loadedCount === totalImages) {
-            this.useHeaderbgGradient.style.opacity = 0.0;
-            this.currentImageIndex = 0;
-            this.changeBackgroundImg();
+            this.useHeaderbgGradient.style.opacity = 0.0
+            this.currentImageIndex = 0
+            this.changeBackgroundImg()
           }
-        };
-      });
+        }
+      })
     }
 
     changeBackgroundImg() {
       this.headerBackgroundImg.forEach((img, index) => {
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 1s ease-in-out';
-      });
+        img.style.opacity = '0'
+        img.style.transition = 'opacity 1s ease-in-out'
+      })
       if (this.headerBackgroundImg[this.currentImageIndex]) {
-        this.headerBackgroundImg[this.currentImageIndex].style.opacity = '1';
+        this.headerBackgroundImg[this.currentImageIndex].style.opacity = '1'
       }
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.headerBackgroundImg.length;
-      setTimeout(() => this.changeBackgroundImg(), 5000);
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.headerBackgroundImg.length
+      setTimeout(() => this.changeBackgroundImg(), 5000)
     }
 
     girlCenter(width, curveHeight) {
-      const imgWidth = 378;
-      const imgHeight = 378;
-      const girlImg = this.girlImg;
-      if (!girlImg) return;
-      const tx = width / 2 - imgWidth / 2;
-      const ty = curveHeight - imgHeight;
-      girlImg.style.transform = `translate(${tx}px, ${ty}px)`;
+      const imgWidth = 378
+      const imgHeight = 378
+      const girlImg = this.girlImg
+      if (!girlImg) return
+      const tx = width / 2 - imgWidth / 2
+      const ty = curveHeight - imgHeight
+      girlImg.style.transform = `translate(${tx}px, ${ty}px)`
     }
 
     navFlow() {
-      this.menu.style.opacity = 1;
-      let flowEnd = false;
-      let space = this.curveLength / this.navs.length;
+      this.menu.style.opacity = 1
+      let flowEnd = false
+      let space = this.curveLength / this.navs.length
       const animate = () => {
         if (space > 0) {
-          space -= this.navs.length;
-          this.setNavsOnPath(space);
-          requestAnimationFrame(animate);
+          space -= this.navs.length
+          this.setNavsOnPath(space)
+          requestAnimationFrame(animate)
         } else {
-          flowEnd = true;
-          this.setNavsOnPath();
-          this.logoNavExpand();
-          this.navLogo.classList.add("jelly-animate");
+          flowEnd = true
+          this.setNavsOnPath()
+          this.logoNavExpand()
+          this.navLogo.classList.add("jelly-animate")
           this.navLogo.addEventListener("animationend", () => {
-            this.navLogo.classList.remove("jelly-animate");
-          }, { once: true });
+            this.navLogo.classList.remove("jelly-animate")
+          }, { once: true })
         }
-      };
-      requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate)
     }
 
     logoNavExpand() {
-      let animating = false;
-      let animated = false;
+      let animating = false
+      let animated = false
       window.addEventListener('scroll', () => {
         if (window.scrollY > 0) {
-          animated = false;
+          animated = false
         }
-      });
+      })
       this.navLogo.addEventListener("mouseover", () => {
-        if (window.scrollY !== 0 || animating || animated) return;
-        animating = true;
-        let space = 0;
+        console.log("yes it is");
+        
+        if (window.scrollY !== 0 || animating || animated) return
+        animating = true
+        let space = 0
         const animate = () => {
           if (space < 50) {
-            space += 5;
-            this.setNavsOnPath(space);
-            requestAnimationFrame(animate);
+            space += 5
+            this.setNavsOnPath(space)
+            requestAnimationFrame(animate)
           } else {
-            animating = false;
-            animated = true;
+            animating = false
+            animated = true
           }
-        };
-        requestAnimationFrame(animate);
-      });
+        }
+        requestAnimationFrame(animate)
+      })
     }
 
     setNavsOnPath(navSpace = 0) {
-      let gap = navSpace / 1000;
+      let gap = navSpace / 1000
       const maxScale = 1;
       const minScale = 0.8;
       const minWidth = Math.min((this.scrollY / 100) * 1, 1.1);
@@ -502,6 +515,7 @@ const r = "50%";
       const centerIndex = Math.floor(navCount / 2);
       let widths = navs.map(nav => nav.getBoundingClientRect().width);
       const navWidthPercents = widths.map(width => width / this.curveLength * minWidth);
+
       let totalOffset = 0;
       for (let i = 0; i < navCount; i++) {
         if (i < centerIndex) {
@@ -510,118 +524,107 @@ const r = "50%";
           totalOffset += navWidthPercents[i] / 2;
         }
       }
+
       let currentOffset = 0.5 - totalOffset;
+
       navs.forEach((nav, i) => {
         const distanceFromCenter = Math.abs(i - centerIndex);
         const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale);
         const navWidthPercent = navWidthPercents[i];
         const navCenterPercent = (currentOffset + navWidthPercent / 2) * 100;
+
         nav.style.offsetPath = `path("${this.curveData}")`;
         nav.style.offsetDistance = `${navCenterPercent}%`;
         nav.style.zIndex = `${100 - distanceFromCenter}`;
         nav.style.transform = `scale(${scaleFactor})`;
+
         currentOffset += navWidthPercent + gap;
       });
     }
 
     navsTip() {
-      this.menu.style.display = "block";
-      const defaultTip = this.defaultTip;
-      const navTip = this.navTip;
-      defaultTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s";
-      navTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s";
+      this.menu.style.display = "block"
+      const defaultTip = document.querySelector(`.${className} .defaultTip`)
+      const navTip = document.querySelector(`.${className} .navTip`)
+      defaultTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s"
+      navTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s"
       this.menu.addEventListener("mouseover", event => {
-        const nav = event.target.closest('.nav');
-        if (!nav) return;
-        defaultTip.style.letterSpacing = '-0.57em';
-        defaultTip.style.opacity = '0';
-        const index = Array.from(this.navs).indexOf(nav);
+        const nav = event.target.closest('.nav')
+        if (!nav) return
+        defaultTip.style.letterSpacing = '-0.57em'
+        defaultTip.style.opacity = '0'
+        const index = Array.from(this.navs).indexOf(nav)
         if (index !== -1 && navTips[index]) {
-          navTip.textContent = navTips[index];
+          navTip.textContent = navTips[index]
         }
-        navTip.style.letterSpacing = '0.1em';
-        navTip.style.opacity = '1';
-      });
+        navTip.style.letterSpacing = '0.1em'
+        navTip.style.opacity = '1'
+      })
       this.menu.addEventListener("mouseout", event => {
-        const nav = event.target.closest('.nav');
-        if (!nav) return;
-        defaultTip.style.letterSpacing = '0.1em';
-        defaultTip.style.opacity = '1';
-        navTip.style.letterSpacing = '10em';
-        navTip.style.opacity = '0';
-      });
+        const nav = event.target.closest('.nav')
+        if (!nav) return
+        defaultTip.style.letterSpacing = '0.1em'
+        defaultTip.style.opacity = '1'
+        navTip.style.letterSpacing = '10em'
+        navTip.style.opacity = '0'
+      })
     }
 
-    
-    updatePath(yScroll = 0) {
-      const ww = window.innerWidth;
-      const wh = window.innerHeight;
-      const curveOffset = 25;
-      const heightoffset = Math.max(150, ww / 10);
-      const middleheight = wh * (config.svgHeight / 100);
+    updatePath(yScroll = 0, isup = false) {
+      const ww = window.innerWidth
+      const wh = window.innerHeight
+      const curveOffset = 25
+      const heightoffset = Math.max(150, ww / 10)
+      
+      yScroll = isup ? yScroll : -yScroll
+      const limitY = Math.min((heightoffset - curveOffset) * 2, yScroll)
+      const viewBoxheight = wh * this.heightViewbox
+      
+      const shapeHeight = isup ? viewBoxheight - heightoffset : viewBoxheight + heightoffset;
 
-      const svgboxOffsetTop = this.svgbox.offsetTop;
-      if (this.idName === "curveHeaderDown") {
-        console.log(`${this.idName}-svgboxOffsetTop: `, (yScroll - svgboxOffsetTop));
+      const curveHeight = viewBoxheight - curveOffset - limitY
+      const centerLeft = ww * 0.25
+      const centerRight = ww - centerLeft
+      const curveData = `M 0,${shapeHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${shapeHeight}`
+      this.curveData = curveData
+      const headData = curveData + ` V 0 H 0 Z`
+
+      const viewBoxHeight = Math.max(curveHeight, shapeHeight) + 100
+
+      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`)
+      this.headerbgPath.setAttribute("d", headData)
+      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`)
+      this.headerPath.setAttribute("d", headData)
+      this.curvePath.setAttribute("d", curveData)
+      this.curveLength = this.curvePath.getTotalLength()
+
+      const baseOffset = 10
+      let shapTopOffset = curveHeight - curveOffset
+      let shapBottomOffset = curveHeight + curveOffset
+      let baseTopHeight = shapeHeight - baseOffset / 2
+      let baseBottomHeight = shapeHeight + baseOffset / 2
+      const shapTop = `M 0,${baseTopHeight} Q ${centerLeft},${shapTopOffset} ${ww / 2},${shapTopOffset} Q ${centerRight},${shapTopOffset} ${ww},${baseTopHeight} v ${baseOffset}`
+      const shapBottom = ` Q ${centerRight},${shapBottomOffset} ${ww / 2},${shapBottomOffset} Q ${centerLeft},${shapBottomOffset} 0,${baseBottomHeight} Z`
+      const curveOffsetData = shapTop + " " + shapBottom
+      this.headerShape.setAttribute("d", curveOffsetData)
+
+      
+      this.svgbox.style.height = `${viewBoxHeight}px`
+      
+      this.girlCenter(ww, curveHeight)
+      this.setNavsOnPath()
+     
+      if(Math.abs(curveHeight-shapeHeight) > 50){
+        this.subTitle.style.top = `${shapeHeight-50}px`
+        this.subTitle.style.opacity = 1
+      }else{
+        this.subTitle.style.opacity = 0
       }
 
-      const relativeScroll = Math.max(0, yScroll - svgboxOffsetTop);
-      let limitY = Math.min((heightoffset - curveOffset) * 2, relativeScroll);
-
-      let sideHeight, curveHeight;
-      if (config.isdown) {
-        sideHeight = middleheight - heightoffset;
-        curveHeight = middleheight - curveOffset - limitY;
-      } else {
-        sideHeight = middleheight + heightoffset;
-        curveHeight = middleheight + curveOffset + limitY;
-      }
-
-      const centerLeft = ww * 0.25;
-      const centerRight = ww - centerLeft;
-      const curveData = `M 0,${sideHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${sideHeight}`;
-      const headData = curveData + ` V 0 H 0 Z`;
-
-      const viewboxHeight = Math.max(curveHeight, sideHeight) + 100;
-      console.log(`${this.idName}-viewboxHeight: `, viewboxHeight);
-
-      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewboxHeight}`);
-      this.headerbgPath.setAttribute("d", headData);
-      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewboxHeight}`);
-      this.headerPath.setAttribute("d", headData);
-      this.curvePath.setAttribute("d", curveData);
-
-      const baseOffset = 10;
-      let shapTopOffset = curveHeight - curveOffset;
-      let shapBottomOffset = curveHeight + curveOffset;
-      let baseTopHeight = sideHeight - baseOffset / 2;
-      let baseBottomHeight = sideHeight + baseOffset / 2;
-      const shapTop = `M 0,${baseTopHeight} Q ${centerLeft},${shapTopOffset} ${ww / 2},${shapTopOffset} Q ${centerRight},${shapTopOffset} ${ww},${baseTopHeight} v ${baseOffset}`;
-      const shapBottom = ` Q ${centerRight},${shapBottomOffset} ${ww / 2},${shapBottomOffset} Q ${centerLeft},${shapBottomOffset} 0,${baseBottomHeight} Z`;
-      const curveOffsetData = shapTop + " " + shapBottom;
-      this.headerShape.setAttribute("d", curveOffsetData);
-
-      // 使用 minHeight 代替 height，确保内容可扩展
-      this.svgbox.style.minHeight = `${viewboxHeight}px`;
-      this.svgbox.style.height = 'auto';
-
-      this.curveData = curveData;
-      this.curveLength = this.curvePath.getTotalLength();
-
-      this.girlCenter(ww, curveHeight);
-      this.setNavsOnPath();
-
-      if (Math.abs(curveHeight - sideHeight) > 50) {
-        this.subTitle.style.top = `${sideHeight - 50}px`;
-        this.subTitle.style.opacity = 1;
-      } else {
-        this.subTitle.style.opacity = 0;
-      }
     }
-    
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    window[`${idName}CurveHeader`] = new CurveHeader(idName, isdown);
-  });
+    const curveHeader = new CurveHeader()
+  })
 </script>
