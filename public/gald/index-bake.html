@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        
+        :root {
+            --hue: 10;
+            --saturation: 89%;
+            --lightness: 50%;
+            --menu-bg: hsl(var(--hue), var(--saturation), var(--lightness));
+            --menu-bg-lighter: hsl(var(--hue), var(--saturation), 50%);
+            --menu-bg-darker: hsl(var(--hue), var(--saturation), 30%);
+            --header-stroke: 5px;
+            --nav-color: rgba(255, 255, 255, 0.7);
+        }
+
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .pa t h H e a de r {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        .headCurve {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
+        }
+
+        .headCurve .headerBackgroundImg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: scale(1.0);
+            transform-origin: bottom center;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .curvePath {
+            fill: none;
+            stroke: var(--menu-bg);
+            stroke-width: calc(var(--header-stroke) * 1);
+            stroke-linecap: round;
+        }
+
+        
+        .textTip {
+            fill: var(--nav-color);
+            font-size: 3em;
+            transition: all 0.3s ease;
+        }
+
+        .headerShape {
+            fill: var(--menu-bg);
+            stroke: rgba(5, 24, 85, 0);
+            stroke-width: 3px;
+            stroke-linecap: round;
+            z-index: 1;
+            
+        }
+
+        .menu .nav {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100%;
+            transform: rotate(90deg);
+            border: var(--header-stroke) solid var(--menu-bg);
+            background-color: var(--menu-bg-darker);
+            color: var(--nav-color);
+            font-size: 1.5em;
+            will-change: offset-path, offset-distance;
+            transition: scale 0.5s ease;
+            cursor: pointer;
+        }
+
+        .menu .nav.logo {
+            background-color: var(--menu-bg-darker);
+        }
+
+        .menu .nav:hover {
+            color: rgba(255, 255, 255, 0.8);
+            background-color: var(--menu-bg-lighter);
+        }
+
+        .menu .nav.logo img {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            padding: 1.5em;
+        }
+   
+    </style>
+</head>
+
+<body>
+    <div class="pathHeader">
+        <svg class="headCurve" viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <clipPath id="headerClip">
+                    <path id="headPath" d="M 0,500 Q 125,750 500,750 Q 875,750 1000,500 V 0 H 0 Z" />
+                </clipPath>
+                <path id="headerShape" class="headerShape" d="" />
+                <path id="curvePath" class="curvePath" d="M 0,500 Q 125,750 500,750 Q 875,750 1000,500" />
+            </defs>
+            <g class="headerImages" clip-path="url(#headerClip)">
+                <image class="headerBackgroundImg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msOZd?w=0&h=0&q=60&m=6&f=jpg&u=t" />
+                <image class="headerBackgroundImg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="https://cn.bing.com/th?id=OHR.BasaltColumns_EN-US4476950150_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4" />
+                <image class="headerBackgroundImg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="https://cn.bing.com/th?id=OHR.ConstitucionStation_EN-US1235857389_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4" />
+                <image class="headerBackgroundImg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="https://cn.bing.com/th?id=OHR.HorseheadRock_EN-US2494437641_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4" />
+            </g>
+            <g>
+                <use href="#headerShape" />
+                <use href="#curvePath" />
+
+                <text class="textTip" dy="-200" >               
+                    <textPath class="defaultTip" href="#curvePath" startOffset="50%" text-anchor="middle">
+                        青花卓越 13640566324  laishi886@hotmail.com
+                    </textPath>
+                </text>
+                <text class="textTip" dy="-200" >
+                    <textPath class="navTip" href="#curvePath" startOffset="50%" text-anchor="middle">
+                        青花卓越
+                    </textPath>                    
+
+                </text>
+
+            </g>
+            
+        </svg>
+        <div class="menu">
+            <div class="nav">特色</div>
+            <div class="nav">服务</div>
+            <div class="nav">项目</div>
+            <div class="nav logo">
+                <img src="/public/assets/logo/qinghua-logo.svg" alt="">
+            </div>
+            <div class="nav">团队</div>
+            <div class="nav">博客</div>
+            <div class="nav">联系</div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+        class CurveHeader {
+            constructor() {
+                this.svg = document.querySelector(".headCurve");
+                this.headPath = document.querySelector("#headPath");
+                this.headerShape = document.querySelector("#headerShape");
+                this.curvePath = document.querySelector("#curvePath");
+                this.headerImages = document.querySelector(".headerImages");
+                this.headerBackgroundImg = document.querySelectorAll(".headerBackgroundImg");
+                this.textTip = document.querySelectorAll(".textTip");
+                this.menu = document.querySelector(".menu");
+                this.navs = document.querySelectorAll(".menu .nav");
+                this.currentImageIndex = 0;
+
+                this.viewBoxHeight = 0;
+                this.pathHeight = 0;
+                this.timeout = null;
+
+                this.scrollY = 0;
+
+                // this.init();
+            }
+
+            init() {
+                this.updatePath(0);
+                this.changeImg();
+                this.changeHue();
+                this.navsTip();
+                // this.menuTip();
+                window.addEventListener('resize', () => {
+                    this.updatePath(0);
+                });
+                window.addEventListener('scroll', () => {
+                    const scrollY = window.scrollY || document.documentElement.scrollTop;
+                    this.scrollY = scrollY;
+                    this.updatePath(scrollY);
+                });
+            }
+
+            changeHue() {
+                let hue = 0;
+                const root = document.documentElement;
+
+                setInterval(() => {
+                    hue = (hue + 30) % 360; // 每次增加30度，循环色相
+                    root.style.setProperty('--hue', hue);
+                }, 5000); // 每3秒切换一次
+            }
+
+            navsTip() {
+
+                const tips = [
+                    "青花卓越筑梦想  网站低价又闪亮",
+                    "三天上线快如风  生意火爆更轻松",
+                    "小预算干大作为  客户引流业绩飞",
+                    "电脑手机全适配  用户体验超专业",
+                    "SEO优化不用愁  百度排名争上游",
+                    "设计开发一条龙  品牌形象攀高峰",
+                    "营销逻辑巧融合  订单滚滚如长河",
+                    "分阶段付费灵活  创业路上好选择",
+                    "展示营销双管下  商机把握赢天下",
+                    "青花服务真靠谱  网站赚钱快一步"
+                ];
+
+                const defaultTip = document.querySelector(".defaultTip");
+                const navTip = document.querySelector(".navTip");
+                defaultTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s";
+                navTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s";           
+
+                // 使用事件委托
+                this.menu.addEventListener("mouseover", (event) => {
+                    const nav = event.target.closest('.nav');
+                    if (!nav) return;
+                    defaultTip.style.letterSpacing = '-0.57em';
+                    defaultTip.style.opacity = '0';
+
+                    const index = Array.from(this.navs).indexOf(nav);
+                    if (index !== -1) {
+                        navTip.textContent = tips[index];
+                    }
+
+                    navTip.style.letterSpacing = '0.1em';
+                    navTip.style.opacity = '1';
+                    
+                });
+                
+                this.menu.addEventListener("mouseout", (event) => {
+                    const nav = event.target.closest('.nav');
+                    if (!nav) return;
+                    defaultTip.style.letterSpacing = '0.1em';
+                    defaultTip.style.opacity = '1';
+
+                    navTip.style.letterSpacing = '10em';
+                    navTip.style.opacity = '0';
+
+                });
+            }
+
+
+            changeImg() {
+                this.headerBackgroundImg.forEach((img, index) => {
+                    img.style.opacity = index === this.currentImageIndex ? 1 : 0;
+                    img.style.willChange = 'opacity';
+                    img.style.transition = 'opacity 0.5s ease';
+                });
+                this.currentImageIndex = (this.currentImageIndex + 1) % this.headerBackgroundImg.length;
+                setTimeout(() => this.changeImg(), 5000);
+            }
+
+            remap(value, inMin, inMax, outMin, outMax) {
+                return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
+            }
+
+            setNavsOnPath(pathData, spacing) {
+
+                console.log("scrollY: ", this.scrollY);
+                const minWidth = Math.min((this.scrollY/100) * 1, 1.2);
+                
+                const curveLength = this.curvePath.getTotalLength();
+                const navs = Array.from(this.navs);
+                const navCount = navs.length;
+                const centerIndex = Math.floor(navCount / 2);
+
+                let widths = [];
+                navs.forEach((nav, i) => {
+                    const distanceFromCenter = Math.abs(i - centerIndex);
+                    const maxScale = 1.2;
+                    const minScale = 0.9;
+                    const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale);
+                    
+                    nav.style.transform = `scale(${scaleFactor})`;
+                    nav.style.zIndex = `${100 - distanceFromCenter}`;
+                    
+                    const width = nav.getBoundingClientRect().width * scaleFactor;
+                    widths[i] = width * minWidth;
+                });
+                
+
+                const totalNavWidth = widths.reduce((a, b) => a + b, 0);
+                const startOffset = (curveLength - totalNavWidth) / 2;
+                let currentOffset = startOffset;
+
+                navs.forEach((nav, i) => {
+                    const navCenter = currentOffset + widths[i] / 2;
+                    nav.style.offsetPath = `path("${pathData}")`;
+                    nav.style.offsetDistance = `${navCenter}px`;
+
+                    const distanceFromCenter = Math.abs(i - centerIndex);
+                    const maxScale = 1.2;
+                    const minScale = 0.9;
+                    const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale);
+
+                    nav.style.transform = `scale(${scaleFactor})`;
+                    nav.style.zIndex = `${100 - distanceFromCenter}`;
+
+                    currentOffset += widths[i];
+                });
+            }
+
+
+            updatePath(ypos) {
+                const ww = window.innerWidth;
+                const wh = window.innerHeight;
+
+                const centerPointOffset = ww / wh * 120;
+                const yposmax = Math.min(centerPointOffset * 2, ypos);
+                const pathHeight = wh * 0.7;
+                const centerHeight = pathHeight + (centerPointOffset - yposmax);
+                const centerLeft = ww * 0.25;
+                const centerRight = ww * 0.75;
+                const rawNavSpace = (1.0 - centerHeight / wh);
+
+                const centerMax = (pathHeight + centerPointOffset) / wh;
+                const centerMin = (pathHeight - centerPointOffset) / wh;
+
+                const navSpace = this.remap(rawNavSpace, centerMin, centerMax, 0, 100);
+                const pd = `M 0,${pathHeight} Q ${centerLeft},${centerHeight} ${ww/2},${centerHeight} Q ${centerRight},${centerHeight} ${ww},${pathHeight}`;
+                const hd = pd + ` V 0 H 0 Z`;
+                const offsetSign = centerHeight > pathHeight ? 1 : -1;
+                const viewBoxOffset = 25;
+
+                let shapTopOffset, shapBottomOffset;
+                shapTopOffset = centerHeight + offsetSign * viewBoxOffset;
+                shapBottomOffset = centerHeight - offsetSign * viewBoxOffset;
+                const shapTop = `M 0,${pathHeight} Q ${centerLeft},${shapTopOffset} ${ww / 2},${shapTopOffset} Q ${centerRight},${shapTopOffset} ${ww},${pathHeight}`;
+                const shapBottom = `Q ${centerRight},${shapBottomOffset} ${ww / 2},${shapBottomOffset} Q ${centerLeft},${shapBottomOffset} 0,${pathHeight}`;
+                const headerShapeData = shapTop + " " + shapBottom + " Z";
+                const viewBoxHeight = Math.max(centerHeight, pathHeight) + viewBoxOffset;
+
+                this.curvePath.setAttribute("d", pd);
+                this.headPath.setAttribute("d", hd);
+                this.headerShape.setAttribute("d", headerShapeData);
+                this.svg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxHeight}`);
+
+                this.viewBoxHeight = viewBoxHeight;
+                this.pathHeight = pathHeight;
+
+                const imgScale = viewBoxHeight / pathHeight * 1.0;                
+                this.headerBackgroundImg.forEach((img, index) => {                    
+                    img.style.willChange = 'transform';
+                    img.style.transform = `scale(${imgScale})`;
+                })
+                
+                this.setNavsOnPath(pd, 10);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // const curveHeader = new CurveHeader();
+            const lenis = new Lenis();
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        });
+
+    </script>
+</body>
+</html>

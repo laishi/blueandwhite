@@ -1,0 +1,658 @@
+---
+import { Icon } from 'astro-icon/components'
+
+const componentName = "CurveHeader"
+const componentDescription = "A dynamic header component with curved SVG path and navigation menu"
+
+const data = {
+  headerImages: [
+    "https://cn.bing.com/th?id=OHR.KenaiSpires_EN-US3294247007_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
+    "https://cn.bing.com/th?id=OHR.VietnamFalls_EN-US9133406245_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
+    "https://cn.bing.com/th?id=OHR.DelicateArch_EN-US2369284902_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
+    "https://cn.bing.com/th?id=OHR.IcelandSolstice_EN-US2057542769_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4",
+  ],
+  girlimg: "/assets/imgs/girl.png",
+  navItems: ["特色", "服务", "项目", "logo", "团队", "博客", "联系"],
+  navMenu: [
+    { label: "特色", icon: "mdi:star" },
+    { label: "服务", icon: "mdi:tools" },
+    { label: "项目", icon: "mdi:briefcase" },
+    { label: "logo", image: "/assets/logo/qinghua-logo.svg" },
+    { label: "团队", icon: "mdi:account-group" },
+    { label: "博客", icon: "mdi:note-text" },
+    { label: "联系", icon: "mdi:email" },
+  ],
+  logoSrc: "/assets/logo/qinghua-logo.svg",
+  defaultTip: "青花卓越 13640566324 laishi886@hotmail.com",
+  navTips: [
+    "青花卓越筑梦想  网站低价又闪亮",
+    "三天上线快如风  生意火爆更轻松",
+    "小预算干大作为  客户引流业绩飞",
+    "电脑手机全适配  用户体验超专业",
+    "SEO优化不用愁  百度排名争上游",
+    "设计开发一条龙  品牌形象攀高峰",
+    "营销逻辑巧融合  订单滚滚如长河",
+    "分阶段付费灵活  创业路上好选择",
+    "展示营销双管下  商机把握赢天下",
+    "青花服务真靠谱  网站赚钱快一步",
+  ],
+}
+
+interface Props {
+  className?: string
+  idName?: string
+  width?: string
+  height?: string
+  backgroundColor?: string
+}
+
+const {
+  className = componentName,
+  idName = componentName,
+  width = "100%",
+  height = "auto",
+  backgroundColor = "rgba(0,0,0,0)",
+} = Astro.props as Props
+
+const cx = "50%"
+const cy = "38%"
+const r = "50%"
+---
+
+<div
+  class={className}
+  id={idName}
+  style={`width: ${width}; height: ${height}; background-color: ${backgroundColor};`}
+>
+  <div class="svgbox">
+    <div class="subTitle">
+      <h3>网站改版 ‘二婚’优惠！</h3>
+    </div>
+    <div class="headerbg">
+      <svg class="headerbgSvg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="headerbgClip">
+            <path id="headerbgPath" d="" />
+          </clipPath>
+          <radialGradient id="headerbgGradient" cx={cx} cy={cy} r={r} gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="5%" stop-color="#f0f0f0" />
+            <stop offset="5.01%" stop-color="#eaeaea" />
+            <stop offset="12%" stop-color="#dcdcdc" />
+            <stop offset="12.01%" stop-color="#cecece" />
+            <stop offset="21%" stop-color="#c0c0c0" />
+            <stop offset="21.01%" stop-color="#b2b2b2" />
+            <stop offset="32%" stop-color="#a4a4a4" />
+            <stop offset="32.01%" stop-color="#969696" />
+            <stop offset="45%" stop-color="#888888" />
+            <stop offset="45.01%" stop-color="#7a7a7a" />
+            <stop offset="60%" stop-color="#6c6c6c" />
+            <stop offset="60.01%" stop-color="#5e5e5e" />
+            <stop offset="76%" stop-color="#505050" />
+            <stop offset="76.01%" stop-color="#424242" />
+            <stop offset="93%" stop-color="#2c2c2c" />
+            <stop offset="93.01%" stop-color="#161616" />
+            <stop offset="100%" stop-color="#000000" />
+          </radialGradient>
+        </defs>
+        <g class="headerImages" clip-path="url(#headerbgClip)">
+          {data.headerImages.map(src => (
+            <image
+              class="headerBackgroundImg"
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMid slice"
+              href={src}
+            />
+          ))}
+        </g>
+        <use class="useHeaderbgPathColor" href="#headerbgPath" />
+        <use class="useHeaderbgGradient" href="#headerbgPath" fill="url(#headerbgGradient)" />
+      </svg>
+    </div>
+    <div class="titleInfo">
+      <slot name="headerTitle" />
+    </div>
+    <div class="headerfg">
+      <svg class="headerfgSvg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="headerClip">
+            <path id="headerPath" d="" />
+          </clipPath>
+          <path id="headerShape" d="" />
+          <path id="curvePath" d="" />
+        </defs>
+        <use class="headderfgUse" href="#headerPath" />
+        <g class="girl" clip-path="url(#headerClip)">
+          <image class="girlImg" href={data.girlimg} />
+        </g>
+        <use class="headerShape" href="#headerShape" />
+        <use class="curvePath" href="#curvePath" />
+        <g>
+          <text class="textTip" dy="-100">
+            <textPath class="defaultTip" href="#curvePath" startOffset="50%" text-anchor="middle">
+              {data.defaultTip}
+            </textPath>
+          </text>
+          <text class="textTip" dy="-100">
+            <textPath class="navTip" href="#curvePath" startOffset="50%" text-anchor="middle"></textPath>
+          </text>
+        </g>
+      </svg>
+    </div>
+    <div class="menu">
+      {data.navMenu.map(item => (
+        <div class={`nav ${item.label === 'logo' ? 'logo' : ''}`}>
+          {item.icon && (
+            <div class="icon-wrapper">
+              <Icon name={item.icon} size="32" />
+            </div>
+          )}
+          {item.image && <img src={item.image} alt="Logo" class="image" />}
+          {item.label !== 'logo' && <div class="label">{item.label}</div>}
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="worker"></div>
+</div>
+
+<style scoped>
+  :root {
+    --hue: 0;
+    --saturation: 72%;
+    --lightness: 40%;
+    --menu-bg: hsl(var(--hue), var(--saturation), var(--lightness));
+    --menu-bg-lighter: hsl(var(--hue), var(--saturation), 50%);
+    --menu-bg-darker: hsl(var(--hue), var(--saturation), 20%);
+    --header-stroke: 5px;
+    --nav-color: rgba(255, 255, 255, 0.7);
+  }
+
+  .worker {
+    position: relative;
+    width: 80%;
+    height: 100vh;
+    top: 0;
+    opacity: 1;
+    margin: 0 auto;
+    background-color: rgba(33, 14, 117, 0.89);
+    z-index: 0;
+  }
+
+  .svgbox {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--background-color);
+    z-index: 10;
+  }
+
+  .svgbox .headerbg {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .svgbox .subTitle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 50px;
+    background-color: var(--background-color);
+    opacity: 0;
+  }
+
+  .svgbox .subTitle h3 {
+    position: relative;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    letter-spacing: 4px;
+    overflow: hidden;
+    background: linear-gradient(90deg, var(--background-color), #fff, var(--background-color));
+    background-repeat: no-repeat;
+    background-size: 80%;
+    animation: text-scan 5s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+  }
+
+  @keyframes text-scan {
+    0% {
+      background-position: -500%;
+    }
+    100% {
+      background-position: 500%;
+    }
+  }
+
+  .svgbox .headerbg .useHeaderbgPathColor {
+    fill: black;
+    opacity: 0.7;
+  }
+
+  .svgbox .headerbg .headerBackgroundImg {
+    transform: scale(1.5);
+  }
+
+  .svgbox .headerfg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .svgbox .headerfg .headderfgUse {
+    fill: rgba(0, 0, 0, 0.1);
+  }
+
+  .svgbox .headerfg .headerShape {
+    fill: var(--menu-bg);
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
+  }
+
+  .svgbox .headerfg .curvePath {
+    fill: none;
+    stroke: var(--menu-bg);
+    stroke-width: calc(var(--header-stroke) * 1);
+    stroke-linecap: round;
+  }
+
+  .svgbox .headerfg .textTip {
+    fill: var(--nav-color);
+    font-size: 1.5em;
+    transition: opacity 0.3s ease;
+  }
+
+  .svgbox .titleInfo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    margin: 0 auto;
+  }
+
+  .svgbox .menu {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .svgbox .menu .nav {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border: var(--header-stroke) solid var(--menu-bg);
+    /* border: var(--header-stroke) solid white; */
+    background-color: var(--menu-bg-darker);
+    color: rgba(255, 255, 255, 0.719);
+    font-size: 1.5em;
+    will-change: offset-path, offset-distance;
+    transition: scale 0.5s ease;
+    cursor: pointer;
+  }
+
+  .svgbox .menu .nav.logo {
+    background-color: var(--menu-bg-darker);
+  }
+
+  .jelly-animate {
+    animation: jelly 0.5s ease-in-out;
+  }
+
+  @keyframes jelly {
+    0% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(1.2, 1.2);
+    }
+    50% {
+      transform: scale(0.8, 0.8);
+    }
+    70% {
+      transform: scale(1.1, 1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .svgbox .menu .nav:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: var(--menu-bg-lighter);
+  }
+
+  .svgbox .menu .nav.logo img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+  }
+</style>
+
+<script type="module" define:vars={{ className, navTips: data.navTips }}>
+  class CurveHeader {
+    constructor() {
+      this.svgbox = document.querySelector('.svgbox')
+      this.subTitle = document.querySelector('.svgbox .subTitle')
+      this.headerbg = document.querySelector('.headerbgSvg')
+      this.headerbgPath = document.querySelector('.headerbg #headerbgPath')
+      this.useHeaderbgGradient = document.querySelector('.headerbg .useHeaderbgGradient')
+      this.headerfg = document.querySelector('.headerfgSvg')
+      this.headerPath = document.querySelector('.headerfg #headerPath')
+      this.headerShape = document.querySelector('.headerfg #headerShape')
+      this.curvePath = document.querySelector('.headerfg #curvePath')
+      this.menu = document.querySelector('.svgbox .menu')
+      this.navs = document.querySelectorAll('.svgbox .menu .nav')
+      this.navLogo = document.querySelector('.nav.logo')
+      this.headerImages = document.querySelector('.svgbox .headerImages')
+      this.headerBackgroundImg = document.querySelectorAll('.svgbox .headerBackgroundImg')
+      this.girlImg = document.querySelector('.girlImg')
+      this.textTip = document.querySelectorAll('.svgbox .textTip')
+
+      this.heightViewbox = 0.9
+      this.curveLength = 0
+      this.curveData = ""
+      this.currentImageIndex = 0
+      this.viewBoxHeight = 0
+      this.pathHeight = 0
+      this.scrollY = 0
+      this.init()
+    }
+
+    init() {
+      this.updatePath()
+      this.changeHue()
+      this.navFlow()
+      this.navsTip()
+      // this.imageSlider()
+      window.addEventListener('resize', () => this.updatePath())
+      window.addEventListener('scroll', () => {
+        this.scrollY = window.scrollY || document.documentElement.scrollTop
+        this.updatePath(this.scrollY)
+      })
+    }
+
+    remap(value, inMin, inMax, outMin, outMax) {
+      return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin)
+    }
+
+    changeHue() {
+      let hue = 0
+      const root = document.documentElement
+      setInterval(() => {
+        hue = (hue + 30) % 360
+        root.style.setProperty('--hue', hue)
+      }, 5000)
+    }
+
+    imageSlider() {
+      const images = Array.from(this.headerBackgroundImg)
+      let loadedCount = 0
+      const totalImages = images.length
+      images.forEach(image => {
+        const imgUrl = image.getAttribute('href')
+        const img = new Image()
+        img.src = imgUrl
+        img.onload = () => {
+          loadedCount++
+          if (loadedCount === totalImages) {
+            this.useHeaderbgGradient.style.opacity = 0.0
+            this.currentImageIndex = 0
+            this.changeBackgroundImg()
+          }
+        }
+      })
+    }
+
+    changeBackgroundImg() {
+      this.headerBackgroundImg.forEach((img, index) => {
+        img.style.opacity = '0'
+        img.style.transition = 'opacity 1s ease-in-out'
+      })
+      if (this.headerBackgroundImg[this.currentImageIndex]) {
+        this.headerBackgroundImg[this.currentImageIndex].style.opacity = '1'
+      }
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.headerBackgroundImg.length
+      setTimeout(() => this.changeBackgroundImg(), 5000)
+    }
+
+    girlCenter(width, curveHeight) {
+      const imgWidth = 378
+      const imgHeight = 378
+      const girlImg = this.girlImg
+      if (!girlImg) return
+      const tx = width / 2 - imgWidth / 2
+      const ty = curveHeight - imgHeight
+      girlImg.style.transform = `translate(${tx}px, ${ty}px)`
+    }
+
+    navFlow() {
+      this.menu.style.opacity = 1
+      let flowEnd = false
+      let space = this.curveLength / this.navs.length
+      const animate = () => {
+        if (space > 0) {
+          space -= this.navs.length
+          this.setNavsOnPath(space)
+          requestAnimationFrame(animate)
+        } else {
+          flowEnd = true
+          this.setNavsOnPath()
+          this.logoNavExpand()
+          this.navLogo.classList.add("jelly-animate")
+          this.navLogo.addEventListener("animationend", () => {
+            this.navLogo.classList.remove("jelly-animate")
+          }, { once: true })
+        }
+      }
+      requestAnimationFrame(animate)
+    }
+
+    logoNavExpand() {
+      let animating = false
+      let animated = false
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 0) {
+          animated = false
+        }
+      })
+      this.navLogo.addEventListener("mouseover", () => {
+        console.log("yes it is");
+        
+        if (window.scrollY !== 0 || animating || animated) return
+        animating = true
+        let space = 0
+        const animate = () => {
+          if (space < 60) {
+            space += 10
+            this.setNavsOnPath(space)
+            requestAnimationFrame(animate)
+          } else {
+            animating = false
+            animated = true
+          }
+        }
+        requestAnimationFrame(animate)
+      })
+    }
+
+
+
+    setNavsOnPath(navSpace = 0) {
+      let gap = navSpace / 1000
+      const maxScale = 1;
+      const minScale = 0.8;
+      const minWidth = Math.min((this.scrollY / 100) * 1, 1.1);
+      const navs = Array.from(this.navs);
+      const navCount = navs.length;
+      const centerIndex = Math.floor(navCount / 2);
+      let widths = navs.map(nav => nav.getBoundingClientRect().width);
+      const navWidthPercents = widths.map(width => width / this.curveLength * minWidth);
+
+      let totalOffset = 0;
+      for (let i = 0; i < navCount; i++) {
+        if (i < centerIndex) {
+          totalOffset += navWidthPercents[i] + gap;
+        } else if (i === centerIndex && navCount % 2 === 1) {
+          totalOffset += navWidthPercents[i] / 2;
+        }
+      }
+
+      let currentOffset = 0.5 - totalOffset;
+
+      navs.forEach((nav, i) => {
+        const distanceFromCenter = Math.abs(i - centerIndex);
+        const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale);
+        const navWidthPercent = navWidthPercents[i];
+        const navCenterPercent = (currentOffset + navWidthPercent / 2) * 100;
+
+        nav.style.offsetPath = `path("${this.curveData}")`;
+        nav.style.offsetDistance = `${navCenterPercent}%`;
+        nav.style.zIndex = `${100 - distanceFromCenter}`;
+        nav.style.transform = `scale(${scaleFactor})`;
+
+        currentOffset += navWidthPercent + gap;
+      });
+    }
+
+
+    __setNavsOnPath(spacing = 0) {
+      const maxScale = 1
+      const minScale = 0.8
+      const minWidth = Math.min((this.scrollY / 100) * 1, 1.1)
+      const navs = Array.from(this.navs)
+      const navCount = navs.length
+      const centerIndex = Math.floor(navCount / 2)
+      let widths = navs.map(nav => nav.getBoundingClientRect().width)
+      let totalWidth = 0
+
+      for (let i = 0; i < navs.length; i++) {
+        const distanceFromCenter = Math.abs(i - centerIndex)
+        const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale)
+        const width = widths[i] * scaleFactor * minWidth
+        widths[i] = width
+        totalWidth += width
+        navs[i].style.transform = `scale(${scaleFactor})`
+      } 
+      
+      totalWidth += spacing * (navCount - 1)
+      const startOffset = (this.curveLength - totalWidth) / 2
+      let currentOffset = startOffset
+
+      navs.forEach((nav, i) => {
+        const distanceFromCenter = Math.abs(i - centerIndex)
+        const scaleFactor = this.remap(distanceFromCenter, 0, centerIndex, maxScale, minScale)
+        const navWidth = widths[i]
+        const navCenter = currentOffset + navWidth / 2
+        nav.style.offsetPath = `path("${this.curveData}")`
+        nav.style.offsetDistance = `${navCenter}px`
+        nav.style.transform = `scale(${scaleFactor})`
+        nav.style.zIndex = `${100 - distanceFromCenter}`
+        currentOffset += navWidth + spacing
+      })
+    }
+
+    navsTip() {
+      this.menu.style.display = "block"
+      const defaultTip = document.querySelector(`.${className} .defaultTip`)
+      const navTip = document.querySelector(`.${className} .navTip`)
+      defaultTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s"
+      navTip.style.transition = "letter-spacing 0.3s, opacity 0.3s, transform 0.3s"
+      this.menu.addEventListener("mouseover", event => {
+        const nav = event.target.closest('.nav')
+        if (!nav) return
+        defaultTip.style.letterSpacing = '-0.57em'
+        defaultTip.style.opacity = '0'
+        const index = Array.from(this.navs).indexOf(nav)
+        if (index !== -1 && navTips[index]) {
+          navTip.textContent = navTips[index]
+        }
+        navTip.style.letterSpacing = '0.1em'
+        navTip.style.opacity = '1'
+      })
+      this.menu.addEventListener("mouseout", event => {
+        const nav = event.target.closest('.nav')
+        if (!nav) return
+        defaultTip.style.letterSpacing = '0.1em'
+        defaultTip.style.opacity = '1'
+        navTip.style.letterSpacing = '10em'
+        navTip.style.opacity = '0'
+      })
+    }
+
+    updatePath(yScroll = 0) {
+      const ww = window.innerWidth
+      const wh = window.innerHeight
+      const curveOffset = 25
+      const heightoffset = Math.max(150, ww / 10)
+      const limitY = Math.min((heightoffset - curveOffset) * 2, yScroll)
+      const viewBoxheight = wh * this.heightViewbox
+      const shapeHeight = viewBoxheight - heightoffset
+      const curveHeight = viewBoxheight - curveOffset - limitY
+      const centerLeft = ww * 0.25
+      const centerRight = ww - centerLeft
+      const curveData = `M 0,${shapeHeight} Q ${centerLeft},${curveHeight} ${ww / 2},${curveHeight} Q ${centerRight},${curveHeight} ${ww},${shapeHeight}`
+      this.curveData = curveData
+      const headData = curveData + ` V 0 H 0 Z`
+      const viewBoxShadow = viewBoxheight + 100     
+
+      this.headerbg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxShadow}`)
+      this.headerbgPath.setAttribute("d", headData)
+      this.headerfg.setAttribute("viewBox", `0 0 ${ww} ${viewBoxShadow}`)
+      this.headerPath.setAttribute("d", headData)
+      this.curvePath.setAttribute("d", curveData)
+      this.curveLength = this.curvePath.getTotalLength()
+
+      const baseOffset = 10
+      let shapTopOffset = curveHeight - curveOffset
+      let shapBottomOffset = curveHeight + curveOffset
+      let baseTopHeight = shapeHeight - baseOffset / 2
+      let baseBottomHeight = shapeHeight + baseOffset / 2
+      const shapTop = `M 0,${baseTopHeight} Q ${centerLeft},${shapTopOffset} ${ww / 2},${shapTopOffset} Q ${centerRight},${shapTopOffset} ${ww},${baseTopHeight} v ${baseOffset}`
+      const shapBottom = ` Q ${centerRight},${shapBottomOffset} ${ww / 2},${shapBottomOffset} Q ${centerLeft},${shapBottomOffset} 0,${baseBottomHeight} Z`
+      const curveOffsetData = shapTop + " " + shapBottom
+      this.headerShape.setAttribute("d", curveOffsetData)
+
+      const svgboxHeight = Math.max(curveHeight, shapeHeight) + 100
+      this.svgbox.style.height = `${svgboxHeight}px`
+      
+      this.girlCenter(ww, curveHeight)
+      this.setNavsOnPath()
+     
+      if(Math.abs(curveHeight-shapeHeight) > 50){
+        this.subTitle.style.top = `${shapeHeight-50}px`
+        this.subTitle.style.opacity = 1
+      }else{
+        this.subTitle.style.opacity = 0
+      }
+
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const curveHeader = new CurveHeader()
+  })
+</script>

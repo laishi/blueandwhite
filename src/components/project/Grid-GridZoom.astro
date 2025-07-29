@@ -1,0 +1,283 @@
+---
+/* 组件说明区 */
+const componentName = "GridZoom";
+const componentDescription =
+  "基于网格布局的图片缩放组件，支持鼠标悬停放大和标题显示效果，适配青花卓越公司的产品展示需求，提供响应式布局和可配置样式。";
+
+/* 数据区 */
+const data = {
+  header: {
+    title: "青花卓越产品展示",
+    subtitle: "浏览我们的服务与案例",
+  },
+  items: [
+    {
+      title: "高端网站建设",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/murra.jpg",
+      alt: "高端网站建设",
+    },
+    {
+      title: "SEO优化服务",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g1.jpg",
+      alt: "SEO优化服务",
+    },
+    {
+      title: "网站开发",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g2.jpg",
+      alt: "网站开发",
+    },
+    {
+      title: "移动端优化",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g3.jpg",
+      alt: "移动端优化",
+    },
+    {
+      title: "电商平台开发",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g4.jpg",
+      alt: "电商平台开发",
+    },
+    {
+      title: "内容管理系统",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g5.jpg",
+      alt: "内容管理系统",
+    },
+    {
+      title: "UI/UX设计",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g6.jpg",
+      alt: "UI/UX设计",
+    },
+    {
+      title: "网站维护",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g7.jpg",
+      alt: "网站维护",
+    },
+    {
+      title: "数据分析集成",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/murra.jpg",
+      alt: "数据分析集成",
+    },
+    {
+      title: "多语言支持",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g1.jpg",
+      alt: "多语言支持",
+    },
+    {
+      title: "品牌网站设计",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g2.jpg",
+      alt: "品牌网站设计",
+    },
+    {
+      title: "社交媒体整合",
+      image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/g3.jpg",
+      alt: "社交媒体整合",
+    },
+  ],
+  resources: {
+    css: [
+      "/assets/common/css/bootstrap.min.css",
+    ],
+    js: [
+      "/assets/common/js/velocity.min.js",
+    ],
+  },
+};
+
+const {
+  width = "100%",
+  height = "auto",
+  margin = "0",
+  padding = "0",
+  backgroundColor = "rgba(31, 37, 61, 0.0)",
+  class: className = "",
+} = Astro.props;
+
+/* HTML 区域 */
+---
+
+<div
+  class="GridZoom"
+  style={`width: ${width}; height: ${height}; margin: ${margin}; padding: ${padding}; background-color: ${backgroundColor};`}
+  class={className}
+>
+  <div class="content">
+    <h1>{data.header.title}</h1>
+    <p>{data.header.subtitle}</p>
+    <div class="container-fluid">
+      <div class="row">
+        {
+          data.items.map((item) => (
+            <div class="col-md-4 col-lg-3 col-xs-6 item nopadding">
+              <div class="overflow">
+                <div class="content-art">
+                  <h4>{item.title}</h4>
+                </div>
+                <img src={item.image} alt={item.alt} class="img-responsive" />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  {data.resources.css.map((src) => <link rel="stylesheet" href={src} />)}
+  {data.resources.js.map((src) => <script src={src} />)}
+</div>
+
+<!-- 样式区 -->
+<style scoped>
+  .row {
+    border-radius: 2em;
+    overflow: hidden;
+  }
+  .GridZoom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .GridZoom .content {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .GridZoom .content h1 {
+    font-size: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .GridZoom .content p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+  }
+
+  .GridZoom .item {
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .GridZoom .item:hover > .overflow > .content-art {
+    transform: translateY(0) translateZ(0);
+  }
+
+  .GridZoom .overflow {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .GridZoom .content-art {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 1px 1px #000;
+    padding: 10px 15px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: 100;
+    -webkit-backface-visibility: hidden;
+    transform: translateY(100%) translateZ(0);
+    transition: transform 450ms ease-out;
+  }
+
+  .GridZoom .nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .GridZoom *,
+  .GridZoom *:after,
+  .GridZoom *:before {
+    box-sizing: border-box;
+  }
+
+  .GridZoom .img-responsive {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
+
+<!-- 脚本区 -->
+<script>
+  class GridZoom {
+    constructor(config = {}) {
+      this.containerSelector = config.containerSelector || ".GridZoom";
+      this.width = config.width || "100%";
+      this.height = config.height || "auto";
+      this.margin = config.margin || "0";
+      this.padding = config.padding || "0";
+      this.backgroundColor = config.backgroundColor || "#1f253d";
+      this.init();
+    }
+
+    init() {
+      const container = document.querySelector(this.containerSelector);
+      if (!container) {
+        console.error("容器未找到:", this.containerSelector);
+        return;
+      }
+
+      const items = container.querySelectorAll(".item");
+      items.forEach((item) => {
+        item.addEventListener("mousemove", (e) => {
+          const img = item.querySelector(".overflow > img");
+          const rect = item.getBoundingClientRect();
+          const offsetX = e.clientX - rect.left - rect.width / 2;
+          const offsetY = e.clientY - rect.top - rect.height / 2;
+          img.style.transform = `translateX(${Math.floor(offsetX)}px) translateY(${Math.floor(offsetY)}px) scale(2)`;
+          img.style.transition = "transform 400ms linear";
+        });
+
+        item.addEventListener("mouseleave", () => {
+          const img = item.querySelector(".overflow > img");
+          img.style.transform = "translateX(0) translateY(0) scale(1)";
+          img.style.transition = "transform 1000ms ease-out";
+        });
+      });
+    }
+
+    destroy() {
+      const container = document.querySelector(this.containerSelector);
+      if (!container) return;
+
+      const items = container.querySelectorAll(".item");
+      items.forEach((item) => {
+        item.removeEventListener("mousemove", null);
+        item.removeEventListener("mouseleave", null);
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    try {
+      const containers = document.querySelectorAll(".GridZoom");
+      containers.forEach((container) => {
+        const config = {
+          containerSelector: ".GridZoom",
+          width: container.style.width || "100%",
+          height: container.style.height || "auto",
+          margin: container.style.margin || "0",
+          padding: container.style.padding || "0",
+          backgroundColor: container.style.backgroundColor || "#1f253d",
+        };
+        new GridZoom(config);
+      });
+    } catch (err) {
+      console.error("GridZoom 初始化失败:", err);
+    }
+  });
+</script>

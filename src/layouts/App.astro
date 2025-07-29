@@ -1,0 +1,51 @@
+
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Basics</title>
+	</head>
+	<body>
+		<slot />
+
+		<!-- <script src="/lib/js/lenis.min.js"></script> -->
+		<script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+		<script type="module">
+			document.addEventListener('DOMContentLoaded', () => {
+				// Initialize Lenis
+				const lenis = new Lenis({
+					lerp: 0.1,
+					smoothWheel: true
+				});
+
+				// Use requestAnimationFrame to continuously update the scroll
+				function raf(time) {
+					lenis.raf(time);
+					requestAnimationFrame(raf);
+				}
+
+				requestAnimationFrame(raf);
+			});
+		</script>
+
+	</body>
+</html>
+
+<style>
+	:root {
+		--background-color: rgb(0, 0, 0);
+	}
+
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+		background-color: black;
+	}
+</style>

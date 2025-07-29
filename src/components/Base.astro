@@ -1,0 +1,83 @@
+---
+/* 组件说明区 */
+const componentName = "Base";
+const componentDescription = "Base slider";
+
+/* 数据区 */
+const data = {
+  header: {
+    title: "青花卓越产品展示",
+    subtitle: "点击卡片查看详细服务内容"
+  },
+  items: [
+    {
+      title: "高端网站建设",
+      description: "为企业提供定制化、高性能的网站建设服务，提升品牌形象。",
+      image: "https://assets.codepen.io/1159990/smart-watch.jpg"
+    },
+  ],
+  resources: {
+    css: [
+      "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    ],
+    js: [
+      "https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"
+    ]
+  }
+};
+
+const {
+    class: className = componentName,
+    id: idName = componentName,
+    position = "relative",
+    width = "100%",
+    height = "60vh",
+    margin = "0",
+    padding = "0",
+    color = "#fff",
+    backgroundColor = "#fff",
+} = Astro.props;
+
+/* HTML 区域 */
+---
+<div class={className} style={`width: ${width}; height: ${height}; margin: ${margin}; padding: ${padding}; background-color: ${backgroundColor};`}>
+  Base
+</div>
+
+{data.resources.css.map(src => (
+  <link rel="stylesheet" href={src} />
+))}
+{data.resources.js.map(src => (
+  <script src={src}></script>
+))}
+
+<!-- 样式区 -->
+<style scoped>
+
+</style>
+
+<!-- 脚本区 -->
+<script define:vars={{ idName }}>
+  class Base {
+    constructor() {
+      this.comp = document.querySelector(`#${idName}`);
+      this.init();
+    }
+
+    init() {
+      if (!this.comp) {
+        console.log('没有元素', this.comp);
+        return;
+      }
+      this.love();
+    }
+
+    love() {
+      console.log('找到了元素', this.comp);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const base = new Base();
+  });
+</script>

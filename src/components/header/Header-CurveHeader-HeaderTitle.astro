@@ -1,0 +1,94 @@
+---
+const componentName = "HeaderTitle";
+const componentDescription = "一个电影标题飞入效果组件，展示青花卓越的广告语，循环淡入淡出，使用 Astro 实现，基于 Montserrat 字体和 CSS 动画，fly-text 居中，section 跟随父容器宽高，sub 内容为 10 个字，每 5 秒切换一次，无缝循环，无文字重叠，修复文字抖动。";
+
+const {
+  className = componentName,
+  idName = componentName,
+  position = "relative",
+  width = "100%",
+  height = "100%",
+  backgroundColor = "rgba(0,0,0,0)",
+} = Astro.props;
+
+const textItems = [
+  { main: "青花卓越", sub: "筑梦网站 快速上线 品质卓越" },
+  { main: "质优价廉", sub: "中小企业 网站首选 省心省力" },
+  { main: "SEO优化", sub: "百度排名 持续领先 流量倍增" },
+  { main: "设计开发", sub: "品牌形象 专业设计 高效开发" },
+];
+const itemCount = textItems.length;
+const switchDuration = 5; // 每项动画持续 5 秒
+const totalDuration = itemCount * switchDuration; // 总动画时长（秒）
+---
+
+<div
+  class={className}
+  id={idName}
+  style={`width: ${width}; height: ${height}; background: ${backgroundColor}; position: ${position};`} >
+  <div id="fly-in" class="fly-in" style={`--total-duration: ${totalDuration}s`}>
+    {textItems.map((item, index) => (
+      <div class="fly-text" style={`animation-delay: ${index * switchDuration}s`}>
+        <h3>{item.main}</h3>
+        <span>{item.sub}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style scoped>
+
+  section {
+    position: relative;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .fly-in {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .fly-in .fly-text {
+    position: absolute;
+    width: 100%;
+    top: 30%;
+    opacity: 0;
+    line-height: 1em;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: opacity, transform, filter;
+    animation: zoomText var(--total-duration) linear infinite;
+  }
+  
+  .fly-in h3 {
+    font-size: 5em;
+    opacity: 0.8;
+    color: var(--menu-bg-lighter);
+  }
+  
+  .fly-in span {
+    font-size: 3em;
+    opacity: 0.8;
+    color: var(--menu-bg-lighter);
+  }
+
+@keyframes zoomText {
+    0% { opacity: 0;filter: blur(20px); transform:scale(2)}
+    3% { opacity: 1;filter: blur(0); transform:scale(1)}
+    10% { opacity: 1;filter: blur(0); transform:scale(.9)}
+    13% { opacity: 0;filter: blur(10px); transform:scale(.1)}
+    80% { opacity: 0}
+    100% { opacity: 0}
+}
+</style>

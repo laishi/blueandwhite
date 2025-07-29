@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #ball {
+      width: 50px;
+      height: 50px;
+      background-color: crimson;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="ball"></div>
+
+  <script>
+    let ball = document.getElementById('ball');
+    let posX = 0;
+
+    function draw() {
+      posX += 2; // 每帧向右移动 2 像素
+      ball.style.left = posX + 'px';
+
+      if (posX < window.innerWidth - 50) {
+        requestAnimationFrame(draw); // 继续动画
+      }
+    }
+
+    requestAnimationFrame(draw); // 启动动画
+  </script>
+</body>
+</html>
